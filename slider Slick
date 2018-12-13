@@ -1,0 +1,75 @@
+** Add dot and (STOP and PLAY) -------------------------------------------------------------------
+
+   if ($('.slide_banner_primary').length) {
+        $('.slide_banner_primary').on('init', function(event, slick) {
+            var $title_panel = $('.slide_banner_primary').closest('.banner_primary').find('.title_panel');
+            $('.slide_banner_primary .slick-dots').wrap($slick_control);
+            $('.slide_banner_primary .slick-control').prepend($btn_control);
+            $title_panel.prepend($('.slide_banner_primary .slick-control'));
+            $('.banner_primary .slick-stop').on('click', function() {
+                if ($(this).hasClass('slick-play')) {
+                    $('.slide_banner_primary').slick("slickPlay");
+                    $(this).removeClass('slick-play');
+                    $(this).text('STOP');
+                } else {
+                    $('.slide_banner_primary').slick("slickPause");
+                    $(this).addClass('slick-play');
+                    $(this).text('PLAY');
+                }
+            });
+        });
+        var slider_other = $('.slide_banner_primary').slick({
+            infinite: true,
+            speed: 300,
+            dots: true,
+            arrows:false,
+            slidesToShow: 1,
+            fade: true
+        });
+        $('.slide_banner_primary').slick("slickPlay");
+    }
+    
+    
+     ** not dot add (STOP and PLAY)---------------------------------------------------------
+    
+    if ($('#tmp_publicity .publicity_slider').length) {
+		var slider_publicity = $('.publicity_slider .slick_slides_publicity').slick({
+			infinite: true,
+			speed: 300,
+			autoplay:true,
+			slidesToShow: 6,
+			slidesToScroll: 1,
+			responsive: [
+				{
+				  breakpoint: 1200,
+				  settings: {
+					slidesToShow: 5,
+					slidesToScroll: 1,
+				  }
+				},
+				{
+					breakpoint: 641,
+					settings: {
+					  slidesToShow: 2,
+					  slidesToScroll: 2,
+					}
+				  }
+
+			  ]
+		});
+	}
+	$("#tmp_publicity .publicity_slider .btn_ctrl").on('click', function() {
+		if ($("#tmp_publicity .publicity_slider .btn_ctrl").hasClass('stop')) {
+			slider_publicity.slick("slickPause");
+			$(this).removeClass("stop").addClass("start");
+			$(this).text('Start');
+		} else {
+			slider_publicity.slick("slickPlay");
+			$(this).removeClass("start").addClass("stop");
+			$(this).text('Stop');
+		}
+		return false;
+	});
+	$('#tmp_publicity .publicity_slider .start').on('click', function() {
+		slider_publicity.slick('slickPlay');
+	});
