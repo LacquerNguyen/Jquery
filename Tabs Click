@@ -1,0 +1,18 @@
+$(function() {
+        // Function tab
+        var _handleTabSwitch = function(){
+            $('.purpose_age .tab_click').each(function(){
+                $(this).find('.purpose_ttl').click(function(){
+                    var iscurrent = $(this).parent().hasClass('active');
+                    if(!iscurrent){
+                        $(this).parent().addClass('active');
+                        $(this).parent().prev().removeClass('active');
+                        $(this).parent().next().removeClass('active');
+                    }
+                    return false;
+                });
+            });
+        };
+        // Call function tab
+        _handleTabSwitch();
+    });
