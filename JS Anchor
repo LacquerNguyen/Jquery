@@ -1,0 +1,11 @@
+$(function () {
+    $('a[href*="#"]').click(function(){
+        var href= $(this).attr("href");
+        var target = $(href == "#" || href == "" ? 'html' : href);
+        if (href!='#tmp_sma_menu') {
+            var position = target.offset().top - 40; //繝倥ャ繝縺ｮ鬮倥＆蛻�ｽ咲ｽｮ繧偵★繧峨☆
+            $("html, body").animate({scrollTop:position}, 550, "swing");
+            return false;
+        };
+    });
+});
