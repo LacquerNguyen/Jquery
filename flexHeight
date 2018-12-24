@@ -1,0 +1,33 @@
+  //========================================
+                        //▼boxの高さ合わせ
+                        //$.GFUNC.flexHeight(【高さを合わせる要素名】, 【一列の要素数】);
+                        //========================================
+                        $.GFUNC.flexHeight = function(obj, col) {
+                            if(obj.length > 0){
+                                obj.css("min-height","");
+                                if(col != 0){
+                                    var lgh = obj.length;
+                                    var lineLen = Math.ceil(lgh / col);
+                                    var liHiArr = [];
+                                    var lineHiArr = [];
+                                    var mode = 'content-box';
+                                    
+                                    mode = window.getComputedStyle(obj[0],null).getPropertyValue('box-sizing');
+                                    
+                                    for (i = 0; i <= lgh; i++) {
+                                        if (mode == 'content-box'){
+                                            liHiArr[i] = obj.eq(i).height();
+                                        }else{
+                                            liHiArr[i] = obj.eq(i).outerHeight();
+                                        }
+                                        if (lineHiArr.length <= Math.floor(i / col) || lineHiArr[Math.floor(i / col)] < liHiArr[i]) {
+                                            lineHiArr[Math.floor(i / col)] = liHiArr[i];
+                                        }
+                                    }
+                                    obj.each(function(i){
+                                        $(this).css('height',lineHiArr[Math.floor(i / col)] + 'px');
+                                    });
+                                }
+                            }
+                        }
+                    
