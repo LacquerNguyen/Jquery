@@ -28,3 +28,30 @@ $(function () {
 				}
 			})
 		});
+
+	//style lớp cha xuất hiện pubup
+.box_pubup {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000000;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+		
+	// style luôn nằm giữa vs màn hình window
+.box_pubup .inside {
+    /* position: absolute; */
+    top: 50%;
+    -moz-transform: translate(0,-50%);
+    -webkit-transform: translate(0,-50%);
+    transform: translate(0,-50%);
+    width: 100%;
+    max-height: 100%;
+    overflow: auto;
+   }
