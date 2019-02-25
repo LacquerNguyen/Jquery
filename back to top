@@ -1,0 +1,33 @@
+var BackToTop = {
+  selector: {
+    linkToTop: $('.pnavi a'),
+    scrollBottom: $(window).scrollTop() + $(window).height(),
+    heightDocument: $(document).height() - $('#tmp_footer').height() - 91,
+    heightFooter: $('#tmp_footer').height()
+  },
+  init: function() {
+    BackToTop.calPos();
+    $(window).scroll(function() {
+      BackToTop.selector.scrollBottom = $(window).scrollTop() + $(window).height();
+      BackToTop.calPos();
+    });
+    BackToTop.scrollToTop();
+  },
+  calPos: function() {
+    BackToTop.selector.scrollBottom = $(window).scrollTop() + $(window).height();
+    if (BackToTop.selector.scrollBottom > (BackToTop.selector.heightDocument)) {
+      BackToTop.selector.linkToTop.parent().css({ bottom: (BackToTop.selector.heightFooter + 20) });
+    } else {
+      BackToTop.selector.linkToTop.parent().css({ bottom: '15px' });
+    }
+  },
+  scrollToTop: function() {
+    BackToTop.selector.linkToTop.on('click', function(e) {
+      $('html,body').animate({
+        scrollTop: 0
+      }, 300, "swing")
+      return false;
+    });
+  }
+};
+BackToTop.init();
