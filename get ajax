@@ -1,0 +1,15 @@
+$('.load').on( "click" ,function(e) {
+        $.getJSON('js/image_list.json', function(data) {
+            var img_list = data;
+            img_list.forEach(function(item){
+                var loadmore = '<li>' + 
+                '<p class="img"><a href="#"><img src="../' +ull_url + '" /></p>' +
+                '<p class="title">' + item.title + '</p>' +
+                '</li>'; item.thumb_url + '" /></a></p>' +
+                '<p class="full_img"><img src="../' + item.f
+                $('.image_slide').append(loadmore);
+            });
+        });
+        $(this).css('display','none');
+        return false;
+    })
