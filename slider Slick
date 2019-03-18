@@ -31,7 +31,14 @@
     
     
      ** not dot add (STOP and PLAY)---------------------------------------------------------
-    
+    function mitsuhide_control_btn(){
+	var slider_dots = $('.slider_inner .slick-dots');
+	var slider_action = $('.slider_inner .action_slide');
+	slider_action.append(slider_dots);
+}
+	$(".slider_inner .group_list").on('init',function(){
+		mitsuhide_control_btn();
+	});
     if ($('#tmp_publicity .publicity_slider').length) {
 		var slider_publicity = $('.publicity_slider .slick_slides_publicity').slick({
 			infinite: true,
