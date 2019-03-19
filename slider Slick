@@ -140,7 +140,14 @@
 	border-radius: 99px;
     outline: none;
 }
-	
+.sliders{
+  visibility:hidden;
+  opacity:0;
+}
+.sliders.slick-initialized{
+  visibility:visible;
+  opacity:1;
+}	
 	
 	
 	
