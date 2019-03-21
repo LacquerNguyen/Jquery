@@ -1,0 +1,94 @@
+	var mc = localStorage.getItem('pc');
+	var pc_to_sp = false;
+	var first_sp = false;
+	var first_pc = false;
+	var slide_pc = $(".group_list");
+	var slide_sp = $('<ul class="group_list">' + $(".group_list").html() + '</ul>'); //clone html cho sp
+	if ($('.group_list').length) {
+		var slickSwitch = {
+			pc: function () {
+				slide_sp.detach();
+				$('.slider_inner').append(slide_pc);
+				if (!first_pc) {
+					first_pc = true;
+					slide_pc.slick({
+						dots: true,
+						infinite: true,
+						slidesToShow: 3,
+						slidesToScroll: 1,
+						focusOnSelect: true,
+						prevArrow: "<button type='button' class='slick-prev slick-arrow'></button>",
+						nextArrow: "<button type='button' class='slick-next slick-arrow'></button>"
+					});
+					moveControlSlick();
+					controlPlay();
+				}
+			},
+			sp: function () {
+				if (!mc) {
+					slide_pc.detach();
+					$('.slider_inner').append(slide_sp);
+					if (!first_sp) {
+						first_sp = true;
+						slide_sp.slick({
+							dots: true,
+							infinite: true,
+							slidesToShow: 1,
+							slidesToScroll: 1,
+							focusOnSelect: true,
+							prevArrow: "<button type='button' class='slick-prev slick-arrow'></button>",
+							nextArrow: "<button type='button' class='slick-next slick-arrow'></button>"
+						});
+						moveControlSlick();
+						controlPlay();
+					}
+				} else {
+					slickSwitch.pc();
+				}
+			}
+		}
+		if ($(window).width() > 640) {
+			slickSwitch.pc();
+		} else {
+			slickSwitch.pc();
+			pc_to_sp = true;
+			slickSwitch.sp();
+		}
+		function moveControlSlick() {
+			$('.group_list .slick-dots').wrap('<div class="slick_control"></div>');
+			$('.group_list .slick_control').prepend('<button type="button" class="btn_slides stop">Stop</button>');
+		}
+
+		function controlPlay() {
+			//$(".group_list").slick("slickPlay");
+			$('.group_list .slick_control .btn_slides').on('click', function(e) {
+				if ($(this).hasClass('stop')) {
+					$('.group_list').slick('slickPause');
+					$(this).removeClass('stop').addClass('start').text('START');
+				} else {
+					$('.group_list').slick('slickPlay');
+					$(this).removeClass('start').addClass('stop').text('STOP');
+				}
+			});
+		}
+		$('#tmp_switch_pc_style').on('click', function () {
+			slickSwitch.pc();
+			location.reload();
+		});
+		$('#tmp_switch_sp_style').on('click', function () {
+			slickSwitch.sp();
+			location.reload();
+		});
+		var mql = window.matchMedia('(max-width: 640px)');
+		function screenTest(e) {
+			if (e.matches) {
+				/* the viewport is 640 pixels wide or less */
+				slickSwitch.sp();
+				if (pc_to_sp == false) {
+					pc_to_sp = true;
+				}
+			} else {
+				slickSwitch.pc();
+			}
+		}
+		mql.addListener(screenTest);
