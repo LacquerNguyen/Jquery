@@ -1,0 +1,19 @@
+		var mq = window.matchMedia( "(max-width: 480px)" );
+			function appendElement(e) {
+				if (e.matches) {
+					$("#tmp_select_lang").appendTo('#tmp_sma_menu');
+					$("#tmp_search").appendTo('#tmp_sma_menu');
+					$("#tmp_gnavi").appendTo('#tmp_sma_menu');
+					$("#tmp_whatto").clone().appendTo('#tmp_sma_menu');
+					$("#tmp_sma_lmenu").insertAfter('#tmp_whatto');
+				} else {
+					$("#tmp_select_lang").prependTo("#tmp_means_primary");
+					$("#tmp_search").prependTo('#tmp_means_secondary');
+					$("#tmp_gnavi").appendTo('#tmp_wrap_gnavi');
+					$('#tmp_sma_menu #tmp_whatto').remove();
+				}
+			}
+			$(document).ready(function(){
+				appendElement(mq);
+				mq.addListener(appendElement);
+			});
