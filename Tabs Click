@@ -16,3 +16,19 @@ $(function() {
         // Call function tab
         _handleTabSwitch();
     });
+
+
+	var _handleTabSwitch = function(){
+		$('.tab .tab-pane').each(function(){
+			$(this).find('.tab_ttl').click(function(){
+				var iscurrent = $(this).parent().hasClass('active');
+				if(!iscurrent){
+					$('.tab .tab-pane').removeClass('active');
+					$(this).parent().addClass('active');
+				}
+				return false;
+			});
+		});
+	};
+	// Call function tab
+	_handleTabSwitch();
