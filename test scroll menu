@@ -101,3 +101,54 @@
 			
 		}
 	}, 150);});
+---------------------------------------------------------------------------------------------------------------------------
+function menuScroll() {
+            $(window).scroll(function() {
+                var windowHeight = $(window)[0].innerHeight;
+                var windowScroll = $(window).scrollTop();
+                var offsetTop = $('.navbar_offset').offset().top;
+                var navOuterHeight = $('.navbar').outerHeight();
+                if (offsetTop - (windowHeight + windowScroll - navOuterHeight) < 0 && $(window).width() >= 991) {
+                    $('.navbar').addClass('fixed');
+                    $('footer').css('margin-bottom',navOuterHeight);
+                    $('#submenu').removeClass('navbar_menu');
+                    $('.closeNav').css('display','none');
+                }
+                else {
+                    $('.navbar').removeClass('fixed');
+                    $('footer').css('margin-bottom',0);
+                    $('#submenu').addClass('navbar_menu');
+                    $('.closeNav').css('display','block');
+                }
+            });
+        }
+    menuScroll();
+    function menuRight() {
+        if ($(window).width() < 991) {
+            $('.navbar').removeClass('fixed');
+            $('.navbar-nav').addClass('menu_rgt');
+            $('.box_menu').css('display','block');
+        }
+        else{
+            $('.box_menu').css('display','none');
+            $('.navbar-nav').removeClass('menu_rgt');
+        }
+    }
+     menuRight();
+     var mq = window.matchMedia( "(min-width: 991px)" );
+     function appendElement(e) {
+         if (e.matches) {
+            menuScroll();
+            $('#submenu').removeClass('navbar_menu');
+            $('.box_menu').css('display','none');
+            $('.navbar-nav').removeClass('menu_rgt');
+            $('.closeNav').css('display','none');
+         } else {
+            $('.navbar').removeClass('fixed');
+            menuRight();
+         }
+     }
+     $(document).ready(function(){
+         appendElement(mq);
+         mq.addListener(appendElement);
+     });
