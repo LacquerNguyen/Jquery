@@ -31,3 +31,16 @@
                             }
                         }
                     
+                    var mql = window.matchMedia('(max-width: 480px)');
+
+                    function changeFlexColumn(e) {
+                      if (e.matches) {
+                        $.GFUNC.flexHeight($('.gnavi .sub_menu li'),5,true);
+                      } else {
+                        $.GFUNC.flexHeight($('.gnavi .sub_menu li'),5,true);
+                      }
+                    }
+                    $(document).ready(function(){
+                      changeFlexColumn(mql);
+                      mql.addListener(changeFlexColumn);
+                    });
