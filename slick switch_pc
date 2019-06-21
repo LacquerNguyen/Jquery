@@ -1,94 +1,112 @@
-	var mc = localStorage.getItem('pc');
-	var pc_to_sp = false;
-	var first_sp = false;
-	var first_pc = false;
-	var slide_pc = $(".group_list");
-	var slide_sp = $('<ul class="group_list">' + $(".group_list").html() + '</ul>'); //clone html cho sp
-	if ($('.group_list').length) {
-		var slickSwitch = {
-			pc: function () {
-				slide_sp.detach();
-				$('.slider_inner').append(slide_pc);
-				if (!first_pc) {
-					first_pc = true;
-					slide_pc.slick({
-						dots: true,
-						infinite: true,
-						slidesToShow: 3,
-						slidesToScroll: 1,
-						focusOnSelect: true,
-						prevArrow: "<button type='button' class='slick-prev slick-arrow'></button>",
-						nextArrow: "<button type='button' class='slick-next slick-arrow'></button>"
-					});
-					moveControlSlick();
-					controlPlay();
-				}
-			},
-			sp: function () {
-				if (!mc) {
-					slide_pc.detach();
-					$('.slider_inner').append(slide_sp);
-					if (!first_sp) {
-						first_sp = true;
-						slide_sp.slick({
-							dots: true,
-							infinite: true,
-							slidesToShow: 1,
-							slidesToScroll: 1,
-							focusOnSelect: true,
-							prevArrow: "<button type='button' class='slick-prev slick-arrow'></button>",
-							nextArrow: "<button type='button' class='slick-next slick-arrow'></button>"
-						});
-						moveControlSlick();
-						controlPlay();
-					}
-				} else {
-					slickSwitch.pc();
-				}
-			}
-		}
-		if ($(window).width() > 640) {
-			slickSwitch.pc();
-		} else {
-			slickSwitch.pc();
-			pc_to_sp = true;
-			slickSwitch.sp();
-		}
-		function moveControlSlick() {
-			$('.group_list .slick-dots').wrap('<div class="slick_control"></div>');
-			$('.group_list .slick_control').prepend('<button type="button" class="btn_slides stop">Stop</button>');
-		}
+$.GDITFUNC.switchSlickLayout = function(options) {
+    var defaults = {
+            wrap: $('#tmp_jcarousel .slick_wrap'),
+            selector: $('#tmp_jcarousel .slick_slides'),
+            slickPcSettings: {
+                dots: true,
+                infinite: true,
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                focusOnSelect: true,
+                autoplay: true,
+                arrows: true,
+            },
+            slickSpSettings: false,
+            useStopControl: true,
+            stopButtonText: 'stop',
+            startButtonText: 'start',
+            pcCallBack: function(){},
+            spCallBack: function(){},
+        },
+        s = $.extend(defaults, options),
+        first_pc = true,
+        first_sp = true,
+        first_pc_start = true,
+        first_sp_start = true,
+        sp_selector;
 
-		function controlPlay() {
-			//$(".group_list").slick("slickPlay");
-			$('.group_list .slick_control .btn_slides').on('click', function(e) {
-				if ($(this).hasClass('stop')) {
-					$('.group_list').slick('slickPause');
-					$(this).removeClass('stop').addClass('start').text('START');
-				} else {
-					$('.group_list').slick('slickPlay');
-					$(this).removeClass('start').addClass('stop').text('STOP');
-				}
-			});
-		}
-		$('#tmp_switch_pc_style').on('click', function () {
-			slickSwitch.pc();
-			location.reload();
-		});
-		$('#tmp_switch_sp_style').on('click', function () {
-			slickSwitch.sp();
-			location.reload();
-		});
-		var mql = window.matchMedia('(max-width: 640px)');
-		function screenTest(e) {
-			if (e.matches) {
-				/* the viewport is 640 pixels wide or less */
-				slickSwitch.sp();
-				if (pc_to_sp == false) {
-					pc_to_sp = true;
-				}
-			} else {
-				slickSwitch.pc();
-			}
-		}
-		mql.addListener(screenTest);
+    /*---- INIT ----*/
+    if (s.selector.length) {
+        sp_selector = $(s.selector[0].outerHTML);
+    }
+
+    /*---- PRIVATE FUNCTION ----*/
+    function pc_layout() {
+        sp_selector.detach();
+        s.wrap.append(s.selector);
+        if (s.slickPcSettings) {
+            if (first_pc) {
+                first_pc = false;
+                s.selector.slick(s.slickPcSettings);
+                append_control(s.selector);
+                if (first_pc_start == false){
+                    s.selector.slick('slickPause');
+                    s.selector.find('.btn_slides').removeClass('stop').addClass('start').find('span').text(s.startButtonText);
+                }
+            }
+            s.selector.slick('setPosition');
+            s.pcCallBack();
+        }
+    }
+
+    function sp_layout() {
+        s.selector.detach();
+        s.wrap.append(sp_selector);
+        if (s.slickSpSettings) {
+            if (first_sp) {
+                first_sp = false;
+                sp_selector.slick(s.slickSpSettings);
+                append_control(sp_selector);
+                if (first_sp_start == false){
+                    sp_selector.slick('slickPause');
+                    sp_selector.find('.btn_slides').removeClass('stop').addClass('start').find('span').text(s.startButtonText);
+                }
+            }
+            sp_selector.slick('setPosition');
+            s.spCallBack();
+        }
+    }
+
+    function append_control(target) {
+        if (s.useStopControl) {
+            target.find('.slick-dots').wrap('<div class="slick_control"></div>');
+            target.find('.slick_control').prepend('<p class="btn_slides stop"><a href="javascript:void(0);"><span>stop</span></a></p>');
+            target.find('.slick_control .btn_slides').on('click', function(e) {
+                if ($(this).hasClass('stop')) {
+                    if (s.slickPcSettings && !first_pc){
+                        s.selector.slick('slickPause');
+                        s.selector.find('.btn_slides').removeClass('stop').addClass('start').find('span').text(s.startButtonText);
+                    }
+                    if (s.slickSpSettings && !first_sp){
+                        sp_selector.slick('slickPause');
+                        sp_selector.find('.btn_slides').removeClass('stop').addClass('start').find('span').text(s.startButtonText);
+                    }
+                    first_pc_start = false;
+                    first_sp_start = false;
+                } else {
+                    if (s.slickPcSettings && !first_pc){
+                        s.selector.slick('slickPlay');
+                        s.selector.find('.btn_slides').removeClass('start').addClass('stop').find('span').text(s.stopButtonText);
+                    }
+                    if (s.slickSpSettings && !first_sp){
+                        sp_selector.slick('slickPlay');
+                        sp_selector.find('.btn_slides').removeClass('start').addClass('stop').find('span').text(s.stopButtonText);
+                    }
+                    first_pc_start = true;
+                    first_sp_start = true;
+                }
+            });
+        }
+    }
+
+    /*---- PUBLIC ----*/
+    return {
+        resize: function (e) {
+            if (e == 'pc') {
+                pc_layout();
+            } else {
+                sp_layout();
+            }
+        }
+    }
+};
