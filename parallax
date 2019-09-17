@@ -1,0 +1,98 @@
+$.GFUNC.parallax = function(options){ //v1.0
+		var defaults = {
+				//Default Options
+				selector: null,
+				height: 0,
+			},
+			s = $.extend(defaults,options);
+		if (!s.selector.length) return {active : false};
+		//Private Variables
+		var selector = s.selector,
+			position = [],
+			doms = [],
+			w_height,
+			moving = s.moving,
+			enable = true;
+		/*---- INIT ----*/
+		init();
+		function init(){
+			selector.each(function(){
+				doms.push($(this));
+			})
+			update_layout();
+		}
+		$(window).on('resize',function(){
+			update_layout()
+		})
+		$(window).on('load resize scroll',function(){
+			if (enable){
+				var top = $(window).scrollTop();
+				selector.each(function(index){
+					handle_parallax($(this),index,top,moving,s.height);
+				});
+			}
+		});
+	
+		/*---- EVENT ----*/
+	
+		/*---- PRIVATE FUNCTION ----*/
+		function update_layout(){
+			if (enable){
+//				console.log(enable)
+				position = [];
+				if (!s.moving) {
+					moving = (selector.find('img').attr('height') * selector.outerWidth() / selector.find('img').attr('width')) - s.height;
+				}
+				w_height = $(window).height();
+				if (s.moving) 
+					selector.find('img').css({
+						'height': s.height + s.moving,
+						'width' : 'auto',
+					});
+				selector.each(function(){
+					position.push(Math.floor($(this).offset().top));
+				});
+			}
+		}
+		function handle_parallax(item,index,w_scroll,moving,height){
+			var original_move = (w_scroll - position[index]) * moving / (w_height - height),
+				current_move = original_move;
+			if (original_move > 0) current_move = 0;
+			if (original_move < -moving) current_move = -moving;
+			//modify current move
+			//-- before start position
+			//if (current_move == -moving) current_move = Math.max(-(height + moving),w_height + w_scroll - position[index] - height - moving);
+			//-- after end position
+			//if (current_move == 0) current_move = Math.min(height + moving,w_scroll - position[index] - 1);
+			item.find('img').css({
+				'transform' : 'translate(-50%,' + current_move + 'px)'
+			});
+		}
+	
+		/*---- PUBLIC ----*/
+		return {
+			active: true,
+			//public function and variables
+			enable: function(){
+				enable = true;
+				update_layout();
+				$(window).trigger('scroll');
+			},
+			disable: function(){
+				enable = false;
+				// console.log('disable',doms)
+				doms.forEach(function(item){
+					item.find('img').attr('style','');
+				});
+			}
+		}
+	}
+  
+  sử dụng
+  
+  
+  	var parallax =  new $.GFUNC.parallax({
+		selector: $('#tmp_brand_step .brand_step .thumb .step_main_image'),
+		height: 350,
+		moving: 100,
+	});
