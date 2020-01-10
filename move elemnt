@@ -17,3 +17,14 @@
 				appendElement(mq);
 				mq.addListener(appendElement);
 			});
+
+	move list
+
+		$('#tmp_section_topics .topics_list_item').each(function () {
+				var caption = $(this).find('.caption_day').detach();
+				if(model=='sp'){
+					caption.insertBefore($(this).find('.link_caption'));
+				}else{
+					caption.insertAfter($(this).find('.link_caption'));
+				}
+			})
