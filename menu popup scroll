@@ -1,0 +1,38 @@
+function scrollMenuPc(){
+	var position_htop  = $('.logo_head_menu').offset().top - 15;
+	var top_hd =$('#tmp_top_hd').innerHeight();
+	var original_scroll = $(window).scrollTop();
+	var original_position = top_hd,
+		max_scroll = 66,
+		original_position_popup = 0;
+	$(window).on("scroll load", function(){
+		var windowScroll = $(window).scrollTop();
+		if($(window).width() > 540 ){
+			if(windowScroll + top_hd + 7 > (position_htop)){
+				$('.logo_head_menu').addClass('fixTop');
+				max_scroll = top_hd;
+			}
+			else{
+				$('.logo_head_menu').removeClass('fixTop');
+				max_scroll = 66;
+			}
+			original_position = original_position + original_scroll - windowScroll;
+			//console.log(top_hd - Math.max(0,$('#tmp_sma_rmenu').outerHeight() - $(window).height() + 15),original_position)
+			original_position = Math.max(top_hd - Math.max(0,$('#tmp_sma_rmenu').outerHeight() - $(window).height() * $('#tmp_wrapper').width() / $(window).width() + 15),original_position);
+			console.log(original_position)
+			original_position = Math.min(original_position,max_scroll);
+			console.log(original_position)
+			$('#tmp_sma_rmenu').css({
+				'top' : original_position
+			});
+			original_scroll = windowScroll;
+			
+		}else{
+			original_position = 0;
+			$('#tmp_sma_rmenu').css('top','');
+			$('.logo_head_menu').removeClass('fixTop');
+		}
+	})
+}
+
+	scrollMenuPc()
