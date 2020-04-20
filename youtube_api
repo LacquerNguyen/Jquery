@@ -126,12 +126,58 @@ function startVideo() {
 
 https://developers.google.com/youtube/iframe_api_reference
 
+================== * Html * ==================
 
 
-
-
-
-
+<div class="video_background">
+    <div class="video_foreground">
+        <div id="tmp_player"></div>
+    </div>
+    <div class="buttons_control">
+        <a href="javascript:void(0)" id="play_button" class="action-ctrl">
+            <span class="play_circle">play</span>
+        </a>
+        <a href="javascript:void(0)" id="pause_button" class="action-ctrl">
+            <span class="pause_circle">pause</span>
+        </a>
+        <a href="javascript:void(0)" id="mute_button">
+            <span class="volume_down">mute</span>
+        </a>
+    </div>
+</div>
+==================== * Css * =======================
+.section_video .video_background {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+	overflow: hidden;
+	color: #ffffff;
+	background-color: #000000;
+}
+.section_video .video_foreground{
+	position: relative;
+}
+#tmp_player {
+    width: 100%;
+    height: 100%;
+}
+.section_video .video_foreground iframe{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+@media (min-aspect-ratio: 16/9) {
+    .section_video .video_foreground {
+        height: 300%;
+		top: -100%;
+    }
+}
 
 
 
