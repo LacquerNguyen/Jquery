@@ -18,3 +18,60 @@ $.GDITFUNC.templateFunction = function(options){ //v1.0
         //public function and variables
     }
 }
+
+    /*-----------------PUBLIC----------------------*/
+	$.GFUNC.popUp = function(options){ //v1.0
+		var defaults = {
+			set:[{
+				elementClick: $('.event-info-logout'),
+				elementfadeIn:$('.popup-login'),
+				elementWrap:'.popup-inner',
+				closeBtn: $(".close-popup a")
+			}]
+			},
+			s = $.extend(defaults,options)
+			//Private Variables
+			;
+	
+		/*---- INIT ----*/
+		function init(){
+			popUp()
+		}
+		/*---- EVENT ----*/
+		function popUp() {
+			$.each(s.set,function(index,value) {
+				value.elementClick.on('click',function(e){
+					e.preventDefault();
+					value.elementfadeIn.fadeIn();
+				})	
+				value.elementfadeIn.click(function (e) {
+					var target = $(e.target);
+					if (!(target.parents(value.elementWrap).length || target.hasClass(value.elementWrap))){
+						value.elementfadeIn.fadeOut();
+					}
+				});
+				if(value.closeBtn === ''){
+					return false
+				}else{
+					value.closeBtn.click(function () {
+						value.elementfadeIn.fadeOut();
+					});
+				}
+			})
+		}
+	
+		/*---- PUBLIC ----*/
+		return {
+			Init:init
+		}
+	}
+/*------------- PUBLIC -------------*/
+var popUp = new $.GFUNC.popUp({
+	set: [{
+		elementClick: $('.event-info-logout .event-box-media'), 
+		elementfadeIn:$('.popup-login'),
+		elementWrap:'.popup-inner',
+		closeBtn: $(".close-popup a")
+	}]
+})
+popUp.Init();
