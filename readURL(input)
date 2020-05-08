@@ -1,0 +1,21 @@
+    function readURL(input) {
+    for(var i =0; i< input.files.length; i++){
+        if (input.files[i]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                if (!$('.imgAvatar').length) {
+                    img = $('<img class="imgAvatar">');
+                    img.attr('src', e.target.result);
+                    img.appendTo('.form-avatar .input-avatar');  
+                }else{
+                    $('.imgAvatar').attr('src', e.target.result);
+                }
+                    
+                }
+            reader.readAsDataURL(input.files[i]);
+            }
+        }
+    }
+    $(".form-avatar .form-control-file").change(function(){
+        readURL(this);
+    });    
