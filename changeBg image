@@ -1,0 +1,8 @@
+ var changeBg = function() {
+		$('.main-visual .gallery_slide').each(function() {
+            var imgUrl = $(this).find('img').attr('src');
+            $(this).find('p').remove();
+			$(this).css('background-image','url('+ imgUrl +')')
+		})
+    }
+    changeBg();
