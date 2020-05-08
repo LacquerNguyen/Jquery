@@ -1,0 +1,20 @@
+$.GDITFUNC = {};
+$.GDITFUNC.templateFunction = function(options){ //v1.0
+    var defaults = {
+            //Default Options
+        },
+        s = $.extend(defaults,options)
+        //Private Variables
+        ;
+
+    /*---- INIT ----*/
+
+    /*---- EVENT ----*/
+
+    /*---- PRIVATE FUNCTION ----*/
+
+    /*---- PUBLIC ----*/
+    return {
+        //public function and variables
+    }
+}
