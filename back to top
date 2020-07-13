@@ -31,3 +31,21 @@ var BackToTop = {
   }
 };
 BackToTop.init();
+========================================================================================================================
+    var backTop = function (scroll) {
+            var winW = $(window).width();
+            winH = $(window).height(),
+                posFooter = $('#tmp_footer').position().top + 40,
+                containerW = $('#tmp_footer .container').width(),
+                scrollTop = scroll + winH,
+                pTop = $('.pnavi');
+            var posBTop = (winW > containerW) ? (winW - containerW) / 2 : 0;
+            if (scrollTop <= posFooter && scroll > 100 ){
+                pTop.addClass('pnavi_fixed');;
+            } else {
+                pTop.removeClass('pnavi_fixed');
+            }
+        }
+        $(window).on('scroll', function () {
+            backTop($(this).scrollTop());
+        })
