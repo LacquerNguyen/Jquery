@@ -1,0 +1,146 @@
+ $.GDITFUNC = {};
+    $.GDITFUNC.searchKeyword = function(options){ //v1.0
+        var defaults = {
+                //Default Options
+                selector: null,
+                set: [],
+                wrapper: '<ul></ul>',
+                item: '<li><a href="#" class="item_link"></a></li>',
+                target_class : 'item_link',
+                search_wrap_class : 'search_wrap',
+                empty_list : '該当結果が見つかりませんでした。'
+            },
+            s = $.extend(defaults,options)
+            ;
+
+        if (!(s.set.length && s.selector && s.selector.length)) return false;
+
+        //Private Variables
+        var data = [],
+            keyword,
+            categories;
+        /*---- INIT ----*/
+        function init(){
+            if (!data.length){
+                read_data(s.set[0],0);
+            }else{
+                main_flow();
+            }
+        }
+
+        /*---- EVENT ----*/
+
+        /*---- PRIVATE FUNCTION ----*/
+        function read_data(item,index){
+            //console.log(item)
+            $.ajax({
+                url: item.link,
+                success: function(res){
+                    var html = $(res);
+                    //console.log(html);
+                    html.find('item').each(function(){
+                        data.push({
+                            title: $(this).find('title').text(),
+                            link: $(this).find('link').text(),
+                            category: item.name
+                        });
+                    });
+                },
+                complete: function(){
+                    if (index < s.set.length - 1){
+                        read_data(s.set[index + 1],index + 1);
+                    }else{
+                        main_flow();
+                    }
+                }
+            });
+        }
+
+        function filter_keyword(key,list){
+            if (key){
+                return list.filter(function(item){
+                    return item.title.indexOf(key) > -1
+                });
+            }else{
+                return list;
+            }
+        }
+
+        function filter_categoties(arr_cat,list){
+            //console.log(arr_cat)
+            if (arr_cat.length){
+                return list.filter(function(item){
+                    return arr_cat.indexOf(item.category) > -1
+                });
+            }else{
+                return list;
+            }
+        }
+
+        function render(list){
+            if (list.length){
+                var selector = $(s.wrapper);
+                list.forEach(function(item){
+                    var child = $(s.item),
+                        target;
+                    if (child.hasClass(s.target_class)) {
+                        target = child
+                    }else{
+                        target = child.find('.' + s.target_class);
+                    }
+                    //console.log(target);
+                    target.attr('href',item.link);
+                    target.text(item.title);
+                    child.appendTo(selector);
+                });
+                if (s.selector.find('.' + s.search_wrap_class).length){
+                    s.selector.find('.' + s.search_wrap_class).html('');
+                }else{
+                    s.selector.append($('<div class="' + s.search_wrap_class + '"></div>'));
+                }
+                selector.appendTo(s.selector.find('.' + s.search_wrap_class));
+            }else{
+                if (s.selector.find('.' + s.search_wrap_class).length){
+                    s.selector.find('.' + s.search_wrap_class).html(s.empty_list);
+                }else{
+                    s.selector.append($('<div class="' + s.search_wrap_class + '">'+ s.empty_list+'</div>'));
+                }
+            }
+        }
+
+        function main_flow(){
+            var f_key = filter_keyword(keyword,data),
+                f_cat = filter_categoties(categories,f_key);
+            render(f_cat);
+        }
+
+        function get_search_list(k,c){
+            keyword = k;
+            categories = c;
+            init();
+        }
+
+        /*---- PUBLIC ----*/
+        return {
+            //public function and variables
+            getSearchList: get_search_list
+        }
+    }
+    
+        $('#tmp_search_keyword').on('submit',function(e){
+        e.preventDefault();
+        var keyword = $(this).find('[name="keyword"]').val(),
+            categories = [];
+        $(this).find('[name="category"]').each(function(){
+            if ($(this).prop('checked')){
+                categories.push($(this).val());
+            }
+        });
+        if (keyword || categories.length){
+            if (search_list) search_list.getSearchList(keyword,categories);
+        }else{
+            alert('キーワードを入力してください。又は、業種を選択してください。');
+        }
+    })
+    
+   
