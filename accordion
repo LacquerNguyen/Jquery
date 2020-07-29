@@ -1,0 +1,58 @@
+	$.GFUNC.accordion = function(options) {
+		var defaults = {
+				wrap: $('.accordion'),
+				item: $('.accordion-item'),
+				target: '.accordion-title',
+				contents: $('.accordion-detail'),
+				contentStr: '.accordion-detail',
+				hasClassSub: 'accordion-detail'
+			},
+		s = $.extend(defaults, options);
+		//Private Function
+		function toggleSlide() {
+			if($(window).width() < 640) {
+				s.wrap.each(function(){
+					$(this).children('.active').children(s.contentStr).slideDown(450);
+					$(this).children().find('.active').removeClass('active');
+				});
+			}else {
+				s.wrap.each(function(){
+					s.contents.css('display','')
+				})
+			}
+		}
+		$(s.target).on('click', function(e) {
+			if($(window).width() < 640) {
+				if ($(this).next().hasClass(s.hasClassSub) == false) {
+					return;
+				}
+				var parent = $(this).parent();
+				var subAccordion = $(this).next();
+				if (parent.hasClass('active')) {
+					$(this).parent().removeClass("active");
+					subAccordion.slideUp(450);
+				} else {
+					$(this).parent().addClass("active");
+					subAccordion.slideDown(450);
+				}
+	
+				e.preventDefault();
+			}
+		});
+		//Public Fuction
+		return {
+			handleAccordion: function() {
+				toggleSlide();
+			}
+		}
+	}
+  ======================================================================================
+  var fnavi_accordion = new $.GFUNC.accordion({
+    wrap: $('.fnavi'),
+    item: $('.fnavi .fnavi_item'),
+    target: '.fnavi_ttl',
+    contents: $('.fnavi_cnt'),
+    contentStr: '.fnavi_cnt',
+    hasClassSub: 'fnavi_cnt'
+  });
+  fnavi_accordion.handleAccordion();
