@@ -1,0 +1,39 @@
+$.GFUNC.cutCharacters = function(options) { //v1.0
+		var defaults = {
+				//Default Options
+				selector: null,
+				length: 100,
+				ending: '...'
+			},
+			s = $.extend(defaults, options),
+			str;
+		if (!(s.selector && s.selector.length)) return { active: false }
+
+		/*---- INIT ----*/
+		function init() {
+			str = s.selector.text();
+			if (str.length > s.length) {
+				str = str.substring(0, s.length) + s.ending
+				s.selector.text(str)
+			} else {
+				return str;
+			}
+
+		}
+
+		/*---- PUBLIC ----*/
+		return {
+			//public function and variables
+			active: true,
+			init: init,
+		}
+    }
+    
+    //extract 60-character string
+    var cut_text = new $.GFUNC.cutCharacters({
+        selector: $('.media_advance .advance_paragraph'),
+        length: 60,
+        ending: '...'
+	});
+	if (cut_text.active) cut_text.init();
+    
