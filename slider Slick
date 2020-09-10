@@ -151,3 +151,10 @@
 	
 	
 	
+$('.cocktails-carousel').on('beforeChange', function(event, slick, currentSlide, nextSlide){
+       
+});
+$('.cocktails-carousel').on('afterChange', function(event, slick, currentSlide, nextSlide){
+   
+});
+	
