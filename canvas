@@ -1,0 +1,67 @@
+ function canvasRecommend(){
+            var element= $('.recommend_group .recommend_item_list .recommend_item');
+                element.each(function () {
+                    var width = $(this).width();
+                    var height = $(this).height();  
+                    var canvas = document.createElement("canvas");
+                	
+            		canvas.width = width;
+            		canvas.height = height;
+            		
+                	var ctx = canvas.getContext('2d');
+                	
+                    ctx.beginPath();
+                    ctx.moveTo(21,44);
+                    ctx.lineTo(width - 12, 13);
+                    ctx.lineTo(width - 32, height-76);
+                    ctx.lineTo(163, height - 71);
+                    ctx.lineTo(120, height - 19);
+                    ctx.lineTo(96, height -70);
+                    ctx.lineTo(31, height -69);
+                    ctx.lineTo(21, 44);
+                    ctx.strokeStyle = '#0066b3';
+                    ctx.fillStyle = "#0066b3";
+                    ctx.fill();
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = '#203864';
+                    
+                    ctx.moveTo(10,38);
+                    ctx.lineTo(139, 24);
+                    
+                    ctx.moveTo(11,38);
+                    ctx.lineTo(17, height-135);
+                    
+                    
+                    ctx.moveTo(width,4);
+                    ctx.lineTo(width - 95, 14);
+                    
+                    ctx.moveTo(width-24,height -68);
+                    ctx.lineTo(width-6, 35);
+                    ctx.moveTo(width-23,height -69);
+                    ctx.lineTo(width-69, height -67);
+                    
+                    
+                    ctx.moveTo(width-91,height-67);
+                    ctx.lineTo(168, height-64);
+                    ctx.lineTo(118, height-6);
+                    ctx.lineTo(93, height-60);
+                    ctx.lineTo(70, height-60);
+                    
+                    ctx.stroke();
+                
+                	var dataURL = canvas.toDataURL();
+                	$(this).css("background", "url('" + dataURL + "') no-repeat ");
+                });
+        
+    
+    }
+           $(window).on('load resize',function(){
+               setTimeout(function(){ 
+                    canvasRecommend()
+               }, 500);
+
+               })
+               canvasRecommend()
