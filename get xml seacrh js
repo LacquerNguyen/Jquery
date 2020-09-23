@@ -1,7 +1,7 @@
 (function($){
 
-    $.GDITFUNC = {};
-    $.GDITFUNC.searchKeyword = function(options){ //v1.0
+    $.NAME = {};
+    $.NAME.searchKeyword = function(options){ //v1.0
         var defaults = {
                 //Default Options
                 selector: null,
