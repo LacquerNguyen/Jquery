@@ -1,4 +1,4 @@
-$.GDITFUNC.switchSlickLayout = function(options) {
+$.NAME.switchSlickLayout = function(options) {
     var defaults = {
             wrap: $('#tmp_jcarousel .slick_wrap'),
             selector: $('#tmp_jcarousel .slick_slides'),
