@@ -1,0 +1,162 @@
+add funcion cookie
+jQuery.cookie = function (name, value, options) {
+	if (typeof value != 'undefined') { // name and value given, set cookie
+		options = options || {};
+		if (value === null) {
+			value = '';
+			options.expires = -1;
+		}
+		var expires = '';
+		if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
+			var date;
+			if (typeof options.expires == 'number') {
+				date = new Date();
+				date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
+			} else {
+				date = options.expires;
+			}
+			expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
+		}
+		// CAUTION: Needed to parenthesize options.path and options.domain
+		// in the following expressions, otherwise they evaluate to undefined
+		// in the packed version for some reason...
+		var path = options.path ? '; path=' + (options.path) : '';
+		var domain = options.domain ? '; domain=' + (options.domain) : '';
+		var secure = options.secure ? '; secure' : '';
+		document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
+	} else { // only name given, get cookie
+		var cookieValue = null;
+		if (document.cookie && document.cookie != '') {
+			var cookies = document.cookie.split(';');
+			for (var i = 0; i < cookies.length; i++) {
+				var cookie = jQuery.trim(cookies[i]);
+				// Does this cookie string begin with the name we want?
+				if (cookie.substring(0, name.length + 1) == (name + '=')) {
+					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+					break;
+				}
+			}
+		}
+		return cookieValue;
+	}
+};
+
+
+
+
+1. Tạo cookies
+----------------------------
+  var abc =$.cookie('cookie');
+  $.cookie('name', 'value');
+  $.cookie('name', 'value', { expires: 7, path: '/' });
+-----------------------------------------
+
+2. Tạo cookie hết hạn, 7 ngày sau đó:
+----------------------------
+  $.cookie('name', 'value', { expires: 7 });
+-----------------------------------------
+
+3. Tạo cookie hết hạn, hợp lệ trên toàn bộ trang web:
+----------------------------
+$.cookie('name', 'value', { expires: 7, path: '/' });
+-----------------------------------------
+
+4.Read cookie:
+----------------------------
+$.cookie('name'); // => "value"
+$.cookie('nothing'); // => undefined
+-----------------------------------------
+
+6.Delete cookie:
+----------------------------
+$.removeCookie('name'); // => true
+$.removeCookie('nothing'); // => false
+// Need to use the same attributes (path, domain) as what the cookie was written with
+$.cookie('name', 'value', { path: '/' });
+// This won't work!
+$.removeCookie('name'); // => false
+// This will work!
+$.removeCookie('name', { path: '/' }); // => true
+-----------------------------------------
+
+demo funcion
+-----------------------------------------
+  $.GFUNC.tabLayout = function (options) {
+        var defaults = {
+            parent_tab: $('.tab .tab-pane'),
+            tab_click: '.tab_ttl',
+            tab_cnt: '.tab_infor_cnt',
+            winW: 640,
+            cookieName:'',
+            cookieValue: {
+                expires: null,
+                path: '/'
+            }
+        },
+            s = $.extend(defaults, options);
+        /*---- INIT ----*/
+        click_tab();
+        reset_active();
+        /*---- PRIVATE FUNCTION ----*/
+        var cookieData;
+        function click_tab() {
+            if(s.cookieName){
+                cookieData = $.cookie(s.cookieName)
+            }
+            $(s.parent_tab).each(function (index,value) {
+                $(this).find($(s.tab_click)).click(function () {
+                    $.cookie(s.cookieName, index, { path: s.cookieValue.path , expires: s.cookieValue.expires });
+                    var iscurrent = $(this).parent().hasClass('active');
+                    if (!s.sp || $(window).width() > s.winW || $('body').hasClass('disp_pc')) {
+                        if (!iscurrent) {
+                            $(s.parent_tab).removeClass('active');
+                            $(s.parent_tab).find(s.tab_cnt).hide();
+                            $(this).parent().addClass('active');
+                            $(this).next().show();
+                        }
+                    } else {
+                        var iscurrent = $(this).parent().hasClass('active');
+                        if (iscurrent) {
+                            $(this).parent().removeClass('active');
+                            $(this).next().slideUp(300);
+                        } else {
+                            $(this).parent().addClass('active');
+                            $(this).next().slideDown(300);
+                        }
+                    }
+                    return false;
+                });
+
+            });
+        }
+
+        function reset_active() {
+            if(s.cookieName){
+                $(s.parent_tab).find($(s.tab_click)).eq(cookieData).trigger('click') ;
+            }else {
+                $(s.parent_tab).removeClass('active');
+                $(s.parent_tab).find(s.tab_cnt).css('display', '');
+                $(s.parent_tab).each(function (index) {
+                    if (!$(this).hasClass('active') && index == 0) $(this).addClass('active');
+                });
+            }
+        }
+        /*---- PUBLIC ----*/
+        return {
+            resize: function () {
+                reset_active();
+            }
+        }
+    };
+
+var notices_tab = new $.GFUNC.tabLayout({
+		parent_tab: $('.box_tab_info .tab_info'),
+		tab_click: '.tab_info_ttl',
+		tab_cnt: '.tab_info_cnt',
+		sp: false,
+		cookieName:'notices_tab'
+	});
+
+
+
+
