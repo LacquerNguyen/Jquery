@@ -81,7 +81,7 @@ $.removeCookie('name', { path: '/' }); // => true
 
 demo funcion
 -----------------------------------------
-  $.GFUNC.tabLayout = function (options) {
+  $.NAME.tabLayout = function (options) {
         var defaults = {
             parent_tab: $('.tab .tab-pane'),
             tab_click: '.tab_ttl',
@@ -149,7 +149,7 @@ demo funcion
         }
     };
 
-var notices_tab = new $.GFUNC.tabLayout({
+var notices_tab = new $.NAME.tabLayout({
 		parent_tab: $('.box_tab_info .tab_info'),
 		tab_click: '.tab_info_ttl',
 		tab_cnt: '.tab_info_cnt',
