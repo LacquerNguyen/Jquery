@@ -24,7 +24,7 @@
 	//============================================================================
 	//============================================================================
 
-	$.GFUNC.tabLayout = function(options){
+	$.NAME.tabLayout = function(options){
 		var defaults = {
 			parent_tab: $('.tab .tab-pane'),
 			tab_click: '.tab_ttl',
