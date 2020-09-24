@@ -130,7 +130,7 @@
         }
     }
 
-    var search_list = new $.GDITFUNC.searchKeyword({
+    var search_list = new $.NAME.searchKeyword({
         selector: $('#tmp_search_keyword_wrap'),
         set: [
             {
