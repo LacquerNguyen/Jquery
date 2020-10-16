@@ -1,8 +1,8 @@
   //========================================
                         //▼boxの高さ合わせ
-                        //$.GFUNC.flexHeight(【高さを合わせる要素名】, 【一列の要素数】);
+                        //$.NAME.flexHeight(【高さを合わせる要素名】, 【一列の要素数】);
                         //========================================
-                        $.GFUNC.flexHeight = function(obj, col) {
+                        $.NAME.flexHeight = function(obj, col) {
                             if(obj.length > 0){
                                 obj.css("min-height","");
                                 if(col != 0){
@@ -35,9 +35,9 @@
 
                     function changeFlexColumn(e) {
                       if (e.matches) {
-                        $.GFUNC.flexHeight($('.gnavi .sub_menu li'),5,true);
+                        $.NAME.flexHeight($('.gnavi .sub_menu li'),5,true);
                       } else {
-                        $.GFUNC.flexHeight($('.gnavi .sub_menu li'),5,true);
+                        $.NAME.flexHeight($('.gnavi .sub_menu li'),5,true);
                       }
                     }
                     $(document).ready(function(){
