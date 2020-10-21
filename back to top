@@ -46,6 +46,13 @@ $.NAme.BackToTop = function (options) { //v1.0
 			init: init
 		}
 	}
+		var back_top = new $.NAME.BackToTop({
+		selector: $('.pnavi'),
+		top: 150,
+		breakpoint: 640,
+		offset_plus_pc: -73,
+		offset_plus_sp: -190
+	});
 ========================================================================================================================
     var backTop = function (scroll) {
             var winW = $(window).width();
