@@ -1,36 +1,51 @@
-var BackToTop = {
-  selector: {
-    linkToTop: $('.pnavi a'),
-    scrollBottom: $(window).scrollTop() + $(window).height(),
-    heightDocument: $(document).height() - $('#tmp_footer').height() - 91,
-    heightFooter: $('#tmp_footer').height()
-  },
-  init: function() {
-    BackToTop.calPos();
-    $(window).scroll(function() {
-      BackToTop.selector.scrollBottom = $(window).scrollTop() + $(window).height();
-      BackToTop.calPos();
-    });
-    BackToTop.scrollToTop();
-  },
-  calPos: function() {
-    BackToTop.selector.scrollBottom = $(window).scrollTop() + $(window).height();
-    if (BackToTop.selector.scrollBottom > (BackToTop.selector.heightDocument)) {
-      BackToTop.selector.linkToTop.parent().css({ bottom: (BackToTop.selector.heightFooter + 20) });
-    } else {
-      BackToTop.selector.linkToTop.parent().css({ bottom: '15px' });
-    }
-  },
-  scrollToTop: function() {
-    BackToTop.selector.linkToTop.on('click', function(e) {
-      $('html,body').animate({
-        scrollTop: 0
-      }, 300, "swing")
-      return false;
-    });
-  }
-};
-BackToTop.init();
+$.NAme.BackToTop = function (options) { //v1.0
+		var defaults = {
+			//Default Options
+			selector: $('.pnavi'),
+			top: 150,
+			breakpoint: 640,
+			offset_plus_pc: 70,
+			offset_plus_sp: 0
+		},
+			s = $.extend(defaults, options);
+		if (!(s.selector && s.selector.length)) return { active: false }
+
+		/*---- INIT ----*/
+		function init(e) {
+			$(window).scroll(function () {
+				var offset = $('.footer_cnt').offset().top;
+				var offset_math = (e == 'pc') ? Math.floor(offset) + s.offset_plus_pc : Math.floor(offset) + s.offset_plus_sp;
+				var scroll_position = ($(window).width() < $('.container').width() && $(window).width() > s.breakpoint) ? (($('.container').width()/$(window).width())*$(window).height() + $(window).scrollTop()) : $(window).scrollTop() + $(window).height();
+				console.log(($('.container').width()/$(window).width())*$(window).height()+$(window).scrollTop())
+				if ($(window).scrollTop() > s.top) {
+					s.selector.fadeIn(150);
+				}
+				else {
+					s.selector.fadeOut(150);
+				}
+				if (scroll_position >= offset_math) {
+					s.selector.removeClass('pnavi_fixed');
+				}
+				else {
+					s.selector.addClass('pnavi_fixed');
+				}
+				if (e == 'pc' && $('body').hasClass('disp_pc') && s.breakpoint <= 640) {
+					s.selector.removeClass('pnavi_fixed');
+				}
+			});
+			$(s.selector).on('click', function (e) {
+				e.preventDefault();
+				$("html, body").animate({ scrollTop: 0 }, 250);
+			});
+		}
+
+		/*---- PUBLIC ----*/
+		return {
+			//public function and variables
+			active: true,
+			init: init
+		}
+	}
 ========================================================================================================================
     var backTop = function (scroll) {
             var winW = $(window).width();
