@@ -54,6 +54,8 @@ var settingMenuSp = {
 };
 settingMenuSp.init();
 ----------------------------------------------css-------------------------
+> **HTML :**
+```css
 #tmp_header .sma_menu_open .icon {
     position: absolute;
     top: 16px;
@@ -106,3 +108,4 @@ settingMenuSp.init();
 #tmp_sma_rmenu .active .text{
 	color: #FFFFFF;
 }
+```
