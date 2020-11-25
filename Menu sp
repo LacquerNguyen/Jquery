@@ -54,6 +54,7 @@ var settingMenuSp = {
 };
 settingMenuSp.init();
 ----------------------------------------------css-------------------------
+
 > **HTML :**
 ```css
 #tmp_header .sma_menu_open .icon {
