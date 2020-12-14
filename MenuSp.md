@@ -53,6 +53,7 @@ var settingMenuSp = {
 };
 settingMenuSp.init();
 ```
+# Hml
 ```html
  <ul id="tmp_hnavi_s">
       <li id="tmp_hnavi_rmenu">
@@ -66,7 +67,7 @@ settingMenuSp.init();
 
 
 
-**CSS :** Icon Menu
+# Css Icon Menu
 ```css
 #tmp_header .sma_menu_open .icon {
     position: absolute;
