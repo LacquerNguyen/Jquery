@@ -37,6 +37,16 @@ $.NAme.BackToTop = function (options) { //v1.0
 				e.preventDefault();
 				$("html, body").animate({ scrollTop: 0 }, 250);
 			});
+					function breakpoint(){
+			var containerR = $('.container').offset().left;
+			$(window).on('resize load',function(){
+				if($(window).width() <= containerW){
+					s.selector.find('a').css({ "right": "10px","left": "auto"});
+				}else{
+					s.selector.find('a').removeAttr("style");
+				}
+			});
+		}
 		}
 
 		/*---- PUBLIC ----*/
