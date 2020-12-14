@@ -1,4 +1,4 @@
-	$.GFUNC.accordion = function(options) {
+	$.Name.accordion = function(options) {
 		var defaults = {
 				wrap: $('.accordion'),
 				item: $('.accordion-item'),
@@ -47,7 +47,7 @@
 		}
 	}
   ======================================================================================
-  var fnavi_accordion = new $.GFUNC.accordion({
+  var fnavi_accordion = new $.Name.accordion({
     wrap: $('.fnavi'),
     item: $('.fnavi .fnavi_item'),
     target: '.fnavi_ttl',
