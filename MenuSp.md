@@ -69,56 +69,67 @@ settingMenuSp.init();
 
 # Css Icon Menu
 ```css
-#tmp_header .sma_menu_open .icon {
+.sma_menu_open .menu_icon{
     position: absolute;
-    top: 16px;
-    left: 50%;
-    margin-left: 21px;
-    width: 19px;
+    top: 11px;
+    left: 0;
+    margin-left: 5px;
+    width: 20px;
     height: 2px;
-    background-color: #0c487b;
-    color: #FFFFFF;
+    color: inherit;
     z-index: 3;
-    transition: all 0.2s ease 0s;
+	-moz-transition: all 0.2s ease 0s;
+	-webkit-transition: all 0.2s ease 0s;
+	transition: all 0.2s ease 0s;
 }
-#tmp_header .sma_menu_open .icon::before,
-#tmp_header .sma_menu_open .icon::after {
+.sma_menu_open .menu_icon{
+	background-color: #dc0011;
+}
+.sma_menu_open .menu_icon:before,
+.sma_menu_open .menu_icon:after {
     content: "";
-    width: 19px;
+    width: 20px;
     height: 2px;
-    left: 0px;
-	background-color: #0c487b;
-    color: #FFFFFF;
+    left: 0;
+    color: inherit;
     position: absolute;
-    top: 0px;
+    top: 0;
     z-index: 1;
-    transition: all 0.2s ease 0s;
+	-moz-transition: all 0.2s ease;
+	-webkit-transition: all 0.2s ease;
+	transition: all 0.2s ease;
 }
-#tmp_header .sma_menu_open .icon::before {
-	transform: translate(0px, -11px);
-	top: 5px;
+.sma_menu_open .menu_icon:before,
+.sma_menu_open .menu_icon:after{
+	background-color: #dc0011;
 }
-#tmp_header .sma_menu_open .icon::after {
-	transform: translate(0px, 11px);
-	top: -5px;
+.sma_menu_open .menu_icon:before {
+	-moz-transform: translate(0, -9px);
+	-webkit-transform: translate(0, -9px);
+	transform: translate(0, -9px);
+	top: 3px;
 }
-#tmp_sma_rmenu .active .icon::before {
+.sma_menu_open .menu_icon:after {
+	-moz-transform: translate(0, 9px);
+	-webkit-transform: translate(0, 9px);
+	transform: translate(0, 9px);
+	top: -3px;
+}
+.sma_menu_open.active .menu_icon:before {
 	top: 0;
-    transform: rotate(45deg);
-    background-color: #FFFFFF;
+	-moz-transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+	transform: rotate(45deg);
+	background-color: #dc0011;
 }
-#tmp_sma_rmenu .active .icon::after {
-    transform: rotate(-45deg);
-	background-color: #FFFFFF;
+.sma_menu_open.active .menu_icon:after {
+	-moz-transform: rotate(-45deg);
+	-webkit-transform: rotate(-45deg);
+	transform: rotate(-45deg);
 	top: 0;
+	background-color: #dc0011;
 }
-#tmp_sma_rmenu .active .icon {
+.sma_menu_open.active .menu_icon {
     background-color: transparent;
-}
-#tmp_sma_rmenu .sma_menu_open.active{
-	background: #0c487b;
-}
-#tmp_sma_rmenu .active .text{
-	color: #FFFFFF;
 }
 ```
