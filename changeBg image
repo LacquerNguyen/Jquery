@@ -5,7 +5,24 @@
 			$(this).css('background-image','url('+ imgUrl +')')
 		})
     }
-    
+$.GFUNC.changeBackground = function(options){ //v1.0
+var defaults = {
+	area : $('#tmp_mainvisual'),
+	selector: $('#tmp_mainvisual .img_slide'),
+    },
+    s = $.extend(defaults,options)
+    //Private Variables
+    ;
+if(!s.area.length || !s.selector.length) return false;
+s.selector.each(function(){
+    var attrSrc = $(this).find('img').attr('src');
+    $(this).css({
+	background: 'url('+attrSrc+') no-repeat center center',
+	'background-size': 'cover',
+    })
+    $(this).find('img').css('display','none');
+})
+    }
     
     -----------------------------------------------------------------------------------------------
     changeBg();
