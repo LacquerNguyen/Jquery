@@ -5,4 +5,43 @@
 			$(this).css('background-image','url('+ imgUrl +')')
 		})
     }
+    
+    
+    -----------------------------------------------------------------------------------------------
     changeBg();
+    $.GFUNC.coverImg = function(options){ //v1.0
+        var defaults = {
+                area : $('#tmp_mainvisual'),
+                obImg: $('#tmp_mainvisual > p > img'),
+                obParent: $(window),
+            },
+            s = $.extend(defaults,options),
+            //Private Variables
+            img = ($('body').hasClass('model_pc') || $('body').hasClass('disp_pc')) ? (s.area.find('.pc img').length ? s.area.find('.pc img') : s.area.find('img')) : (s.area.find('.sp img').length ? s.area.find('.sp img') : s.area.find('img'))
+            ;
+        // if(s.selectorImg.length == 0) return {active: false};
+        img.on('load',img_position_caculate);
+        img_position_caculate()
+        function img_position_caculate(){
+            obImg.each(function() {
+                var imgW = $(this)[0].naturalWidth,
+                    imgH = $(this)[0].naturalHeight,
+                    winW = $('#tmp_wrapper').width(),
+                    winH = (s.obParent.width() < winW && s.obParent.width() > 640) ? s.obParent.height() * (winW/s.obParent.width()) : s.obParent.height(),
+                    scaleW = winW / imgW,
+                    scaleH = winH / imgH,
+                    fixScale = Math.max(scaleW, scaleH),
+                    setW = imgW * fixScale,
+                    setH = imgH * fixScale,
+                    moveX = Math.floor((winW - setW) / 2),
+                    moveY = Math.floor((winH - setH) / 2);
+                $(this).css({
+                    'position' : 'absolute',
+                    'width': setW,
+                    'height': setH,
+                    'left': moveX,
+                    'top': moveY
+                });
+            })
+        }
+    }
