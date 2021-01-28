@@ -5,6 +5,7 @@ function scrollMenuPc(){
 	var original_position = top_hd,
 		max_scroll = 66,
 		original_position_popup = 0;
+		var original_position = 0;
 	$(window).on("scroll load", function(){
 		var windowScroll = $(window).scrollTop();
 		if($(window).width() > 540 ){
