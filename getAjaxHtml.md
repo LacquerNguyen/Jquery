@@ -1,4 +1,4 @@
-# getAjaxHtm
+# getAjaxHtml Popup
 ```javascript
 function loadPopup(model){
     var removePop = $.cookie('removePopup');
