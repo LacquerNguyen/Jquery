@@ -25,6 +25,7 @@ $('.section_tab').each(function() {
     });
   });
   ```
+  HTML
   ```html
 <div class="section_tab">
 	<div class="container">
@@ -117,6 +118,7 @@ $('.section_tab').each(function() {
 	tab_click: '.tab_infor_ttl',
 	tab_cnt: $('#tmp_infor_tab .tab_infor_cnt'),
   ```
+    HTML
 ```html
 <div class="box_tab_info">
 	<div class="tab_info">
@@ -136,6 +138,7 @@ $('.section_tab').each(function() {
 	</div>
 </div>
 ```
+  Css
 ```css
 .box_tab_info {
 	position: relative;
