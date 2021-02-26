@@ -6,9 +6,13 @@
             },
             s = $.extend(defaults,options),
             //Private Variables\
-            cart = new Array()
-            ;
-
+            cart = new Array();
+ 		cart = [{
+                name:'a',
+                price:'2',
+                image:'image',
+                quantity:0
+            	}];
         init();
         /*---- INIT ----*/
         function init(){
