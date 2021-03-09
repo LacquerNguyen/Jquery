@@ -62,3 +62,49 @@ var readMorePhoto = $.GFUNC.readMore({
 	limit: 6
 });
 ```
+
+```javascript
+var seemoreBtn = function() {
+    var delayDisp = 50,
+        i = 0,
+        oTxt = 'もっと見る',
+        nTxt = '閉じる';
+    if($('.type_idx').length) {
+        $('.type_idx .box_menu_cnt').each(function() {
+            if($(this).find('li').length > 3) {
+                $(this).find('.see_more').css('display','block');
+                $(this).find('.see_more').on('click','a',function() {
+                    if($(this).hasClass('opened')) {
+                        $(this).removeClass('opened');
+                        i = 0;
+                        $(this).parents('.box_menu_cnt').find('li').each(function(index){
+                            if(index > 2) {
+                                $(this).slideUp();
+                                i++;
+                            }
+                        });
+                        setTimeout(changeTxt, delayDisp* i, $(this), oTxt);
+                    } else {
+                        i = 0;
+                        $(this).addClass('opened');
+                        $(this).parents('.box_menu_cnt').find('li').each(function(index){
+                            if(index > 2) {
+                                $(this).slideDown();
+                                i++;
+                            }
+                        });
+                        setTimeout(changeTxt, delayDisp* i, $(this), nTxt);
+                    }
+                })
+            }
+        })
+        function changeTxt(viewBtn, cTxt) {
+            viewBtn.text(cTxt);
+        }
+    }
+}
+seemoreBtn();
+$('.btn_print').on('click',function(){
+    window.print();
+});
+```
