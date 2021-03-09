@@ -104,7 +104,4 @@ var seemoreBtn = function() {
     }
 }
 seemoreBtn();
-$('.btn_print').on('click',function(){
-    window.print();
-});
 ```
