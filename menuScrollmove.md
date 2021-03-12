@@ -1,4 +1,4 @@
-# Jquery
+# menuScrollmove
 ```javascript
 	$.GFUNC.scrollMenuFixed = function(options){ //v1.0
 		var defaults = {
@@ -115,4 +115,52 @@
 			init: init
 		}
 	}
+```
+# menuScroll
+```javascript
+var mq = window.matchMedia( "(max-width: 640px)" );
+	function appendElement(e) {
+		var elemnt= $('.header_fixed');
+		var windowScroll;
+		var headerH = $('#tmp_header').innerHeight();
+			$( window ).on('scroll load',function() {
+				windowScroll = $(window).scrollTop()
+				if (e.matches) {
+					$('#tmp_header').css('height','auto');
+					$(elemnt).removeClass('fixed');
+					$(elemnt).removeClass('show');
+					$(elemnt).removeAttr('style');	
+				}else{
+					if(windowScroll > headerH + 20){
+						$('#tmp_header').css('height',headerH);
+						$(elemnt).addClass('fixed');
+					}else{
+						$('#tmp_header').css('height','auto');
+						$(elemnt).removeClass('fixed');
+						$(elemnt).removeAttr('style');
+				}
+			}
+		});
+	}
+	$(document).ready(function(){
+		appendElement(mq);
+		mq.addListener(appendElement);
+	});
+```
+```css
+.header_fixed{
+	padding: 10px 0 15px;
+    top: -96px;
+	-moz-transition: top 0.5s ease-in-out;
+	-webkit-transition: top 0.5s ease-in-out;
+	transition: top 0.5s ease-in-out;
+}
+.header_fixed.fixed{
+	position: fixed;
+	width: 100%;
+	left: 0;
+	background-color: #FFFFFF;
+	z-index: 99;
+	top: 0;
+}
 ```
