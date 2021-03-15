@@ -78,3 +78,7 @@
 	}
 });
 ```
+```html
+<script type="text/javascript" src="/cms8341/shared/site_rn/js/countdown.js"></script>
+<div class="row_countdown">&nbsp;</div>
+```
