@@ -1,4 +1,4 @@
-$.GFUNC.parallax = function(options){ //v1.0
+$.Name.parallax = function(options){ //v1.0
 		var defaults = {
 				//Default Options
 				selector: null,
@@ -91,7 +91,7 @@ $.GFUNC.parallax = function(options){ //v1.0
   sử dụng
   
   
-  	var parallax =  new $.GFUNC.parallax({
+  	var parallax =  new $.Name.parallax({
 		selector: $('#tmp_brand_step .brand_step .thumb .step_main_image'),
 		height: 350,
 		moving: 100,
