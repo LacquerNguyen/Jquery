@@ -150,4 +150,13 @@
             selector: s.selector
         }
 	}
+		var animation_top = function() {
+		var message_ani = new $.GFUNC.inViewObserver({
+			selector: $('#tmp_message'),
+			inviewCondition: function(self_percent, window_percent, inview_px) {
+				return (self_percent > 0.4 || window_percent.top < 0.8)
+			}
+		});
+		}
+			animation_top();
 ```
