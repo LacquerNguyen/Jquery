@@ -156,6 +156,13 @@
 			inviewCondition: function(self_percent, window_percent, inview_px) {
 				return (self_percent > 0.4 || window_percent.top < 0.8)
 			}
+			if (message_ani.active) {
+			message_ani.on('in_view', function() {
+				message_ani.selector.addClass('show');
+				message_ani.destroy();
+			});
+			message_ani.init();
+		}
 		});
 		}
 			animation_top();
