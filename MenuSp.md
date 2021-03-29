@@ -52,6 +52,72 @@ var settingMenuSp = {
     }
 };
 settingMenuSp.init();
+
+
+
+	$.name.spMenu = function(options) {
+		var o = $.extend({
+			menuBtn: [{
+					oBtn:'#tmp_hnavi_lmenu a', //メニューボタン
+					target:'#tmp_sma_lmenu' //展開するメニュー
+				}],
+			closeBtn: '.close_btn', //閉じるボタン
+			addClass: 'spmenu_open' //bodyに付与するクラス
+		},options);
+		var l = o.menuBtn.length;
+		if(l >= 0){
+			for(i=0;i<l;i++) {
+				$(o.menuBtn[i].oBtn).on('click', {elem:o.menuBtn[i].target}, function(e) {
+					var self = $(this);
+					if(self.hasClass('active')){
+						self.removeClass('active');
+						$(e.data.elem).hide();
+						$('body').removeClass(o.addClass);
+					} else {
+						for(var i=0;i<o.menuBtn.length;i++){
+							if($(o.menuBtn[i].oBtn).hasClass('active')) $(o.menuBtn[i].oBtn).removeClass('active');
+							$(o.menuBtn[i].target).hide();
+						}
+						self.addClass('active');
+						$(e.data.elem).show();
+						if(o.addClass) $('body').addClass(o.addClass);
+					}
+				});
+				$(o.menuBtn[i].target).on('click', o.closeBtn, {elem:o.menuBtn[i]}, function(ev) {
+					$(ev.data.elem.oBtn).removeClass('active');
+					$(ev.data.elem.target).hide();
+					$('body').removeClass(o.addClass);
+				});
+
+				// 画面外をタップした際にメニューを閉じる処理
+				$(document).on('click touchstart', {elem:o.menuBtn[i]}, function(e) {
+				    //タップされた要素の親がhtml要素の場合は閉じる
+				    if(($(e.target).parent().is($('html')))){
+						$(o.menuBtn).each(function(){
+							if($(this.oBtn).hasClass('active')){
+								$(this.oBtn).removeClass('active');
+							}
+						});
+						$('body').removeClass(o.addClass);
+						$(e.data.elem.target).hide();
+				    }
+			    });
+			}
+		}
+	};
+
+
+	//スマホメニュー設定
+	$.Name.spMenu({
+		menuBtn: [{
+                slideEffect: true,
+				oBtn:'#tmp_hnavi_rmenu a',
+				target:'#tmp_sma_rmenu'
+			}],
+		closeBtn: '.close_btn', //閉じるボタン
+		addClass: 'spmenu_open' //bodyに付与するクラス(不要の場合空にする)
+	});
+
 ```
 # Hml
 ```html
