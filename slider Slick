@@ -158,3 +158,50 @@ $('.cocktails-carousel').on('afterChange', function(event, slick, currentSlide, 
    
 });
 	
+======================================================================================================
+
+		if ($('.gallery_main .slick_slides').length && $('.photos_thumb .slick_slides').length) {
+			$('.gallery_main .slick_slides').slick({
+				autoplay: false,
+				slidesToShow: 1,
+				slidesToScroll: 1,
+				arrows: false,
+				fade: true,
+				dots: false,
+				centerMode: false,
+				arrows: false,
+				pauseOnHover: false,
+				pauseOnFocus: false,
+				asNavFor: '.photos_thumb .slick_slides'
+			});
+			$('.photos_thumb .slick_slides').slick({
+				autoplay: false,
+				slidesToShow: 4,
+				slidesToScroll: 1,
+				asNavFor: '.gallery_main .slick_slides',
+				centerMode: false,
+				vertical: false,
+				verticalSwiping: false,
+				dots: false,
+				arrows: true,
+				focusOnSelect: true,
+				prevArrow: "<a href='javascript:void(0);' class='slick-prev slick-arrow'><img src='/cms8341/shared/templates/album_free/images/icon/icon_slide_prev.png' alt='前のスライドを表示' width='31' height='31' /></a>",
+				nextArrow: "<a href='javascript:void(0);' class='slick-next slick-arrow'><img src='/cms8341/shared/templates/album_free/images/icon/icon_slide_next.png' alt='次のスライドを表示' width='31' height='31' /></a>",
+				pauseOnHover: false,
+				pauseOnFocus: false,
+				customPaging: function (slider, i) {
+					return ('<a href="javascript:void(0)"><span>' + (i + 1) + '番目のスライドを表示</span></a>');
+				},
+				responsive: [{
+					breakpoint: 640,
+					settings: {
+						slidesToShow: 2,
+						slidesToScroll: 1
+					}
+				}
+				]
+			});
+			$('.photos_thumb .slick_slides').on('breakpoint', function (e) {
+				$('.photos_thumb .slick_slides').slick('setPosition');
+			});
+		}
